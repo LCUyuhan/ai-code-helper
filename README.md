@@ -158,7 +158,7 @@ npm run dev
 ./mvnw test
 ```
 
-`SafeInputGuardrailTest` 不依赖外部服务，可直接运行；`AiCodeHelperApplicationTests` 需要真实 API Key，默认 `@Disabled`，按需手动运行。
+`SafeInputGuardrailTest` 不依赖外部服务，可直接运行。当前测试只覆盖输入护栏，不包含需要真实 API Key 的集成测试。
 
 ## 已知限制
 

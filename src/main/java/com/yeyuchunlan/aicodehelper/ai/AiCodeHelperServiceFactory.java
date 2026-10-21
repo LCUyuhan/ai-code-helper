@@ -2,7 +2,6 @@ package com.yeyuchunlan.aicodehelper.ai;
 
 import com.yeyuchunlan.aicodehelper.tools.InterviewQuestionTool;
 import dev.langchain4j.mcp.McpToolProvider;
-import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
@@ -29,14 +28,11 @@ public class AiCodeHelperServiceFactory {
     @Bean
     public AiCodeHelperService aiCodeHelperService(McpToolProvider mcpToolProvider,
                                                    ObjectProvider<ContentRetriever> contentRetrieverProvider) {
-        // 默认记忆：供没有 @MemoryId 的方法使用，只保留最近 10 条消息
-        ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
         AiServices<AiCodeHelperService> builder = AiServices.builder(AiCodeHelperService.class)
                 .chatModel(myQwenChatModel)                              // 同步调用的模型
                 .streamingChatModel(qwenStreamingChatModel)             // 流式输出的模型
-                .chatMemory(chatMemory)                                  // 无 @MemoryId 的方法共用这一份记忆
                 .chatMemoryProvider(memoryId ->
-                        MessageWindowChatMemory.withMaxMessages(10))     // 有 @MemoryId 的方法各会话一份记忆
+                        MessageWindowChatMemory.withMaxMessages(10))     // 按 @MemoryId 为每个会话维护独立记忆
                 .tools(new InterviewQuestionTool())                      // 本地工具：@Tool 注解的方法
                 .toolProvider(mcpToolProvider);                          // 远程工具：通过 MCP 协议获取
         // rag.enabled=false 时容器里没有 contentRetriever，这里跳过 RAG，其余能力照常可用
