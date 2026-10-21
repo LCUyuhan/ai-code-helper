@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: ai-code-helper
+  profiles:
+    active: local            # 生效的配置环境，local 会额外读取 application-local.yml
+
+ai:
+  base-url: https://dashscope.aliyuncs.com/compatible-mode/v1   # 百炼的 OpenAI 兼容接口
+  api-key: <在此填入百炼 API Key>
+  chat-model: qwen3.8-27b              # 同步对话模型
+  streaming-chat-model: qwen3.8-27b    # 流式对话模型，需与 chat-model 保持一致
+
+langchain4j:
+  community:
+    dashscope:
+      embedding-model:       # 向量模型仍走 DashScope 原生接口
+        model-name: qwen3.7-text-embedding-flash
+        api-key: <在此填入百炼 API Key>
+
+bigmodel:
+  api-key: <在此填入智谱 API Key>    # 智谱 API Key，用于连接其托管的 MCP 联网搜索服务
+
+rag:
+  enabled: true            # 是否在启动时加载知识库；关闭后不消耗 embedding 额度
+
+app:
+  cors:
+    allowed-origins: http://localhost:5173   # 允许访问的前端地址，多个用逗号分隔
+
+server:
+  port: 8081
+  servlet:
+    context-path: /api       # 所有接口统一加前缀 /api

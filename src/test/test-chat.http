@@ -1,0 +1,15 @@
+### 测试 AI 聊天接口
+GET http://localhost:8081/api/ai/chat
+    ?message=我是程序员鱼皮
+    &memoryId=1
+
+### 测试 AI 聊天接口（带中文编码）
+GET http://localhost:8081/api/ai/chat
+    ?message={{message}}
+    &memoryId={{memoryId}}
+
+> {%
+    client.test("请求成功", function() {
+        client.assert(response.status === 200, "响应状态码应该是 200");
+    });
+%}
