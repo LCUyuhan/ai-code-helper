@@ -29,12 +29,12 @@ public class InterviewQuestionTool {
      * @return 面试题列表，若失败则返回错误信息
      */
     @Tool(name = "interviewQuestionSearch", value = """
-            Retrieves relevant interview questions from mianshiya.com based on a keyword.
-            Use this tool when the user asks for interview questions about specific technologies,
-            programming concepts, or job-related topics. The input should be a clear search term.
+            当用户需要查找面试题、题库，或询问某个技术方向有哪些高频面试题时调用。
+            参数是技术关键词，例如 "Redis"、"Java 并发"、"MySQL 索引"。
+            返回面试鸭网站上的相关题目列表。
             """
     )
-    public String searchInterviewQuestions(@P(value = "the keyword to search") String keyword) {
+    public String searchInterviewQuestions(@P(value = "要搜索的技术关键词，例如 Redis") String keyword) {
         List<String> questions = new ArrayList<>();
         // 构建搜索URL（编码关键词以支持中文）
         String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);

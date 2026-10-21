@@ -34,8 +34,10 @@ public class McpConfig {
                 .transport(transport)
                 .build();
         // 3. 工具提供者：把该客户端暴露的远程工具打包，交给 AiServices 使用
+        // 该服务提供 4 个功能相近的搜索工具，只保留一个，减少模型选择歧义
         McpToolProvider toolProvider = McpToolProvider.builder()
                 .mcpClients(mcpClient)
+                .filterToolNames("webSearchPro")
                 .build();
         return toolProvider;
     }
